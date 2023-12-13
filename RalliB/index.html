@@ -13,6 +13,21 @@
       <ul>
         <li v-for="p in msg"> {{ p }}</li>
       </ul>
+      <form action="" method="post">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br/><br/>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br/><br/>
+
+        <label for="cuantitatAposta">Cuantitat Aposta:</label>
+        <input type="text" id="cuantitatAposta" name="cuantitatAposta" required>
+        <br/><br/>
+
+        <input type="submit" value="Aposta">
+      </form>
     </div>
   </body>
 </html>
