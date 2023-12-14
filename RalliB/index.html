@@ -5,25 +5,39 @@
     <link rel="icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ralli Serie B</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js" defer></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js" defer></script> -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js" defer></script>
     <script type="text/javascript" src="/src/data/dadesPilots.js" defer></script>
   </head>
   <body>
     <div id="app">
-      <ul>
-        <li v-for="p in msg"> {{ p }}</li>
-      </ul>
-      <form action="" method="post">
+      <form v-on:submit.prevent="validarCamps" method="post">
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" v-model="email" name="email">
         <br/><br/>
         
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" v-model="psswd" name="password">
+        <br/><br/>
+
+        <label for="pilot">Pilot:</label>
+        <select v-model="pilot_selected" v-on:change="generarAposta">
+          <option v-for="pilot in pilots" :value="pilot.multiplicador" :key="pilot.multiplicador">
+            {{ pilot.nom }}
+          </option>
+        </select>
+        <br/><br/>
+
+        <label for="aposta">Aposta:</label>
+        <select v-model="aposta_selected" v-on:change="generarAposta">
+          <option v-for="aposta in aposta" :value="aposta.valor" :key="aposta.valor">
+            {{ aposta.nom }}
+          </option>
+        </select>
         <br/><br/>
 
         <label for="cuantitatAposta">Cuantitat Aposta:</label>
-        <input type="text" id="cuantitatAposta" name="cuantitatAposta" required>
+        <input type="text" v-model="qt_apostada" name="cuantitatAposta">
         <br/><br/>
 
         <input type="submit" value="Aposta">
