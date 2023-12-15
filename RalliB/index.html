@@ -22,7 +22,7 @@
 
         <label for="pilot">Pilot:</label>
         <select v-model="pilot_selected" v-on:change="generarAposta">
-          <option v-for="pilot in pilots" :value="pilot.multiplicador" :key="pilot.multiplicador">
+          <option v-for="pilot in pilots" :value="pilot.id" :key="pilot.id">
             {{ pilot.nom }}
           </option>
         </select>
@@ -30,7 +30,7 @@
 
         <label for="aposta">Aposta:</label>
         <select v-model="aposta_selected" v-on:change="generarAposta">
-          <option v-for="aposta in aposta" :value="aposta.valor" :key="aposta.valor">
+          <option v-for="aposta in aposta" :value="aposta.id" :key="aposta.id">
             {{ aposta.nom }}
           </option>
         </select>
