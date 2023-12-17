@@ -3,7 +3,7 @@ const app = Vue.createApp ({
     data () {
         return {
             email : null,
-            psswd : null,
+            passwd : null,
             pilot_selected : null,
             aposta_selected : null,
             qt_apostada : null,
@@ -21,22 +21,54 @@ const app = Vue.createApp ({
             multi: null,
             premi: null,
             dades: [],
+            errors: [],
         }
     },
 
     methods: {
         validarCamps ()
         {
-            let item = {
-                name : this.email,
-                pilot : this.pilot_selected,
-                aposta : this.aposta_selected,
-                qt : this.qt_apostada,
-                premi : this.premi,
-                }
-                this.dades.push(item)
-                localStorage.setItem('ultimaAposta', JSON.stringify(item));
-            console.log(item);
+            let valid = true;
+        
+            this.errors = [];
+
+            if (!this.email) {
+                this.errors.push('El mail es obligatorio');
+                valid = false;
+            }
+            if (!this.passwd) {
+                this.errors.push('La contrassenya es obligatoria');
+                valid = false;
+            }
+            if (!this.pilot_selected) {
+                this.errors.push('Has de escollir un pilot');
+                valid = false;
+            }
+            if (!this.aposta_selected) {
+                this.errors.push('Has de escollir la aposta');
+                valid = false;
+            }
+            if (!this.qt_apostada || this.qt_apostada <= 0) {
+                this.errors.push('Has de posar una quantitat valida');
+                valid = false;
+            }
+
+            //guardar la aposta si tots els camps son valids
+            if(valid){
+                let item = {
+                    email : this.email,
+                    pilot : this.pilot_selected,
+                    aposta : this.aposta_selected,
+                    qt : this.qt_apostada,
+                    premi : this.premi,
+                    }
+                    this.dades.push(item)
+                    localStorage.setItem('ultimaAposta', JSON.stringify(item));
+                console.log(item);
+            }else{
+                //aposta no valida
+            }
+            
         },
         generarAposta ()
         {
