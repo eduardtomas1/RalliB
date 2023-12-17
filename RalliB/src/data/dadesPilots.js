@@ -18,10 +18,12 @@ const app = Vue.createApp ({
                 {"id":"3", "nom":"posicioExacte", "valor":[2.0, 4.0]},
                 {"id":"4", "nom":"mort", "valor":[4.0, 5.5]}
             ],
-            multiplicador : null,
+            multi: null,
+            premi: null,
+            dades: [],
         }
     },
-    
+
     methods: {
         validarCamps ()
         {
@@ -30,9 +32,11 @@ const app = Vue.createApp ({
                 pilot : this.pilot_selected,
                 aposta : this.aposta_selected,
                 qt : this.qt_apostada,
+                premi : this.premi,
                 }
                 this.dades.push(item)
-            console.log(item)
+                localStorage.setItem('ultimaAposta', JSON.stringify(item));
+            console.log(item);
         },
         generarAposta ()
         {
@@ -46,24 +50,42 @@ const app = Vue.createApp ({
                 let multi = this.randomFloat(a.valor[0],a.valor[1]);
         
                 let obj = {
-                    "pilot": p.id, "aoposta":a.id, "multi": multi, 
+                    "pilot": p.id, "aposta":a.id, "multi": multi, 
                 }
 
-                
-                //console.log(arr_multi.findIndex(this.findMultiplicador));
-
-                if(this.multiplicador != null){
-                    for(let i = 0; i < this.multiplicador.length; i++){
-                        console.log(this.multiplicador[i]);
-                    }
-                }else{
-                    this.multiplicador = [];
-                    this.multiplicador.push(obj);
+                //recollim el objecte amb els multiplicadors generats
+                let multiplicador = JSON.parse(localStorage.getItem('multiplicador'));
+                if (multiplicador == null){
+                    multiplicador = [];
                 }
-                console.log(this.multiplicador);
-
                 
+                //console.log(multiplicador);
+                //busqueda dins dels multiplicadors si ja ha estat generat;
+                let repetit = multiplicador.findIndex((e)=>{
+                    //console.log("e.pilot: "+e.pilot+" p: "+p.id+ " e.aposta: "+e.aposta+" a: "+a.id); 
+                    return e.pilot == p.id && e.aposta == a.id;
+                });
+                //si no ha estat generat el guardem
+                //console.log("repetit: "+repetit);
+                if(repetit == -1){
+                    multiplicador.push(obj);
+                    localStorage.setItem('multiplicador', JSON.stringify(multiplicador));
+                    repetit = multiplicador.length - 1;
+                }
 
+                //utilitzem el valor de repetit per saber quin es el multiplicador que s'ha de mostrar
+                this.multi = multiplicador[repetit].multi.toFixed(2);
+
+                //si els diners ja estan introduits s'actualitza el formulari
+                this.calcularAposta();
+            }
+        },
+        calcularAposta(){
+            if((""+this.qt_apostada).trim().length > 0 && this.qt_apostada > 0 && this.multi != null){
+                this.premi = (this.qt_apostada * this.multi).toFixed(2);
+                console.log("Premi: "+this.premi)
+            }else{
+                this.premi = null
             }
         },
         randomFloat(min, max)
@@ -81,6 +103,16 @@ const app = Vue.createApp ({
         findMultiplicador(e)
         {
             return (e['pilot'] == this.pilot_selected && e['aposta'] == this.aposta_selected);
+        },
+        resetFormulari(){
+            this.premi = null
+            this.multi = null
+            this.email = null
+            this.psswd = null
+            this.pilot_selected = null
+            this.aposta_selected = null
+            this.qt_apostada = null
+            console.log("reset");
         }
     }
 

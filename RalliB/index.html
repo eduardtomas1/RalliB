@@ -37,10 +37,11 @@
         <br/><br/>
 
         <label for="cuantitatAposta">Cuantitat Aposta:</label>
-        <input type="text" v-model="qt_apostada" name="cuantitatAposta">
-        <br/><br/>
-
-        <input type="submit" value="Aposta">
+        <input type="number" v-model="qt_apostada" v-on:keyup="calcularAposta" name="cuantitatAposta"> €
+        <br/>
+        <p>Multiplicador: {{ multi }}</p> 
+        <p>Premi: {{ premi }}</p>
+        <input type="submit" value="Aposta"> <input type="button" v-on:click="resetFormulari" name="reset" value="Reset">
       </form>
     </div>
   </body>
