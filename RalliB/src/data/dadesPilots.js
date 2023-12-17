@@ -20,7 +20,6 @@ const app = Vue.createApp ({
             ],
             multi: null,
             premi: null,
-            dades: [],
             errors: [],
             result: null,
             mostrarErrors: false,
@@ -77,16 +76,34 @@ const app = Vue.createApp ({
 
             //guardar la aposta si tots els camps son valids
             if(valid){
+                //recollim el array de apostes
+                let ultimesApostes = JSON.parse(localStorage.getItem('ultimesApostes'));
+
+                //comprovem si realment existien apostes si no declarem array
+                let i = 1;
+                if(ultimesApostes == null){
+                    ultimesApostes = [];
+                }else{
+                    i = ultimesApostes[ultimesApostes.length -1 ].id;
+                    i++;
+                }
+                
                 let item = {
+                    id : ""+i,
                     email : this.email,
                     pilot : this.pilot_selected,
                     aposta : this.aposta_selected,
                     qt : this.qt_apostada,
                     premi : this.premi,
-                    }
-                    this.dades.push(item)
-                    localStorage.setItem('ultimaAposta', JSON.stringify(item));
+                }
+
+                //guardem la aposta nova
+                ultimesApostes.push(item);
+                //guardem el array de apostes amb el camp afegit
+                localStorage.setItem('ultimesApostes', JSON.stringify(ultimesApostes));
+
                 console.log(item);
+                //mostrem la aposta realitzada al cap de 5 segons esborrem el dormulari i al cap de 7 esborrem el resultat
                 this.mostrarAposta();
                 setTimeout(this.resetFormulari, 5000);
                 setTimeout(()=>{this.result = null}, 7000);
@@ -103,7 +120,7 @@ const app = Vue.createApp ({
         generarAposta ()
         {
             if (this.pilot_selected != null && this.aposta_selected != null) {
-                
+                //busquem el pilot i la aposta dins dels arrays que tenim per generar els multiplicadors
                 let p = this.pilots.find(this.findPilot);
                 let a = this.aposta.find(this.findAposta);
                 let arr_multi = this.multiplicador;
@@ -144,6 +161,7 @@ const app = Vue.createApp ({
         },
         calcularAposta()
         {
+            //calcul per mostrar el premi
             if((""+this.qt_apostada).trim().length > 0 && this.qt_apostada > 0 && this.multi != null){
                 this.premi = (this.qt_apostada * this.multi).toFixed(2);
                 console.log("Premi: "+this.premi)
@@ -151,6 +169,7 @@ const app = Vue.createApp ({
                 this.premi = null
             }
         },
+        //funcions de random i de busqueda
         randomFloat(min, max)
         {
             return Math.random()*(max-min)+min;
@@ -193,6 +212,3 @@ const app = Vue.createApp ({
 
 app.mount('#app')
 
-
-//ester ha recomendat fer una funcio de rest i que pasat uns segons es nateji el formulari un cop les dades han estat enviades;
-//si o si use del webStorage
