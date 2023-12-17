@@ -33,30 +33,7 @@ html body #app {
   align-items: center;
   justify-content: space-around;
 }
-html body #app form {
-  background-color: whitesmoke;
-  height: 60%;
-  width: 15vw;
-  padding: 3vw;
-  border-radius: 10%;
-  display: flex;
-  flex-direction: column;
-}
-html body #app form label {
-  margin-top: 10px;
-  align-self: flex-start;
-}
-html body #app form label:first-child {
-  margin-top: 0;
-}
-html body #app form input {
-  width: 80%;
-  align-self: flex-start;
-}
-html body #app form input:last-child {
-  margin-top: 15px;
-}
-html body #app form .boto {
+html body #app .boto {
   align-items: center;
   appearance: none;
   background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
@@ -86,16 +63,39 @@ html body #app form .boto {
   will-change: box-shadow, transform;
   font-size: 18px;
 }
-html body #app form .boto:focus {
+html body #app .boto:focus {
   box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
 }
-html body #app form .boto:hover {
+html body #app .boto:hover {
   box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
   transform: translateY(-2px);
 }
-html body #app form .boto:active {
+html body #app .boto:active {
   box-shadow: #3c4fe0 0 3px 7px inset;
   transform: translateY(2px);
+}
+html body #app form {
+  background-color: whitesmoke;
+  height: 60%;
+  width: 15vw;
+  padding: 3vw;
+  border-radius: 10%;
+  display: flex;
+  flex-direction: column;
+}
+html body #app form label {
+  margin-top: 10px;
+  align-self: flex-start;
+}
+html body #app form label:first-child {
+  margin-top: 0;
+}
+html body #app form input {
+  width: 80%;
+  align-self: flex-start;
+}
+html body #app form input:last-child {
+  margin-top: 15px;
 }
 html body #app #choco {
   position: relative;
@@ -115,7 +115,11 @@ html body #app .errors {
   padding: 10px;
   border-radius: 5px;
   animation: apareixer 1s ease-out forwards;
+  max-width: 500px;
 }
 html body #app .mostrar-errors {
   display: block;
+}
+html body #app .result {
+  color: #fff;
 }

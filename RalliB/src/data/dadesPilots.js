@@ -22,6 +22,7 @@ const app = Vue.createApp ({
             premi: null,
             dades: [],
             errors: [],
+            result: null,
             mostrarErrors: false,
         }
     },
@@ -32,13 +33,27 @@ const app = Vue.createApp ({
             let valid = true;
         
             this.errors = [];
-
+            
+            let mail_valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
             if (!this.email) {
                 this.errors.push('El mail es obligatorio');
                 valid = false;
+            }else if(!mail_valid.test(this.email)){
+                this.errors.push('El mail no es valid');
+                valid = false;
             }
+            //el primer parentesis confirma que hi hagi una mayuscula una minuscula un digit i 
+            //un caracter especial dels que es permet en qualsevol pocicio de la cadena ( / \ - ! ¡ ? ¿ % & =)
+            //i el segon parentesis permet que es puguin escriure la quantitat de vegades que sigui els anteriors caracters
+            let passwd_valid = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\/\\\-!¡?¿%&=])([A-Z]|[a-z]|\d|[\/\\\-!¡?¿%&=])*$/;
             if (!this.passwd) {
                 this.errors.push('La contrassenya es obligatoria');
+                valid = false;
+            }else if(this.passwd.length < 5){
+                this.errors.push('La contrassenya ha de tenir 5 caracters minim');
+                valid = false;
+            }else if(!passwd_valid.test(this.passwd)){
+                this.errors.push('La contrassenya ha de tenir una mayuscula,\n una minuscula, un numero i un caracter especial ( / \ - ! ¡ ? ¿ % & = )');
                 valid = false;
             }
             if (!this.pilot_selected) {
@@ -72,10 +87,14 @@ const app = Vue.createApp ({
                     this.dades.push(item)
                     localStorage.setItem('ultimaAposta', JSON.stringify(item));
                 console.log(item);
-            }else{
-                //aposta no valida
+                this.mostrarAposta();
+                setTimeout(this.resetFormulari, 5000);
+                setTimeout(()=>{this.result = null}, 7000);
             }
-            
+        },
+        amagarErrors ()
+        {
+            this.mostrarErrors = false;
         },
         amagarErrors ()
         {
@@ -123,7 +142,8 @@ const app = Vue.createApp ({
                 this.calcularAposta();
             }
         },
-        calcularAposta(){
+        calcularAposta()
+        {
             if((""+this.qt_apostada).trim().length > 0 && this.qt_apostada > 0 && this.multi != null){
                 this.premi = (this.qt_apostada * this.multi).toFixed(2);
                 console.log("Premi: "+this.premi)
@@ -147,15 +167,25 @@ const app = Vue.createApp ({
         {
             return (e['pilot'] == this.pilot_selected && e['aposta'] == this.aposta_selected);
         },
-        resetFormulari(){
+        resetFormulari()
+        {
             this.premi = null
             this.multi = null
             this.email = null
-            this.psswd = null
+            this.passwd = null
             this.pilot_selected = null
             this.aposta_selected = null
             this.qt_apostada = null
             console.log("reset");
+        }, 
+        mostrarAposta()
+        {
+            let text = "";
+
+            text = "<p>Mail: "+this.email+"</p><p>Pilot: "+this.pilots[this.pilot_selected].nom+"</p><p>Aposta: "+this.aposta[this.aposta_selected].nom+"</p><p> Import: "+ this.qt_apostada+ "</p><p> Premi: "+this.premi+"</p>";
+
+            this.result = text;
+            console.log(this.result);
         }
     }
 

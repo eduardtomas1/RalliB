@@ -24,7 +24,7 @@
 				<li v-for="error in errors">{{ error }}</li>
 			</ul>
 			</p>
-			<button @click="amagarErrors">D'acord</button> <!-- Botó per tancar la finestra d'error-->
+			<button @click="amagarErrors" class="boto">D'acord</button> <!-- Botó per tancar la finestra d'error-->
 		</div>
 		<div class="form">
 			<form v-on:submit.prevent="validarCamps" method="post">
@@ -48,8 +48,8 @@
 				</option>
 			</select>
 	
-			<label for="cuantitatAposta">Cuantitat Aposta (€):</label>
-			<input type="number" v-model="qt_apostada" v-on:keyup="calcularAposta" name="cuantitatAposta"> 
+			<label for="cuantitatAposta">Quantitat Aposta (€):</label>
+			<input type="number" v-model="qt_apostada" v-on:keyup="calcularAposta" v-on:change="calcularAposta" name="cuantitatAposta"> 
 			
 			<p>Multiplicador: {{ multi }}</p> 
 			<p>Premi: {{ premi }}</p>
@@ -58,7 +58,7 @@
 			</form>
 		</div>
 		<div>
-			<span class="result" id="result" name="result"></span>
+			<span class="result" id="result" name="result" v-html="result"></span>
 		</div>
 
 		<img id="choco" src="./src/img/car.png">
