@@ -1,0 +1,115 @@
+@font-face {
+  font-family: Ubuntu;
+  src: url(Ubuntu-R.ttf);
+}
+@keyframes apareixer {
+  from {
+    transform: translateX(-50%) translateY(100%);
+  }
+  to {
+    transform: translateX(-50%) translateY(-200%);
+  }
+}
+html {
+  font-family: Ubuntu;
+}
+html body {
+  margin: 0;
+}
+html body #app {
+  height: 100vh;
+  background-color: black;
+  background-image: url(../img/back-road.jpg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: right;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+html body #app form {
+  background-color: whitesmoke;
+  height: 60%;
+  width: 15vw;
+  padding: 3vw;
+  border-radius: 10%;
+  display: flex;
+  flex-direction: column;
+}
+html body #app form label {
+  margin-top: 10px;
+  align-self: flex-start;
+}
+html body #app form label:first-child {
+  margin-top: 0;
+}
+html body #app form input {
+  width: 80%;
+  align-self: flex-start;
+}
+html body #app form input:last-child {
+  margin-top: 15px;
+}
+html body #app form .boto {
+  align-items: center;
+  appearance: none;
+  background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
+  border: 0;
+  border-radius: 6px;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, rgba(58, 65, 111, 0.5) 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: "JetBrains Mono", monospace;
+  height: 48px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow 0.15s, transform 0.15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow, transform;
+  font-size: 18px;
+}
+html body #app form .boto:focus {
+  box-shadow: #3c4fe0 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+}
+html body #app form .boto:hover {
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #3c4fe0 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+html body #app form .boto:active {
+  box-shadow: #3c4fe0 0 3px 7px inset;
+  transform: translateY(2px);
+}
+html body #app #choco {
+  position: relative;
+  right: 11vw;
+  top: 10vw;
+  height: auto;
+  width: 25%;
+}
+html body #app .errors {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(100%);
+  background-color: #ff4444;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  animation: apareixer 1s ease-out forwards;
+}
+html body #app .mostrar-errors {
+  display: block;
+}

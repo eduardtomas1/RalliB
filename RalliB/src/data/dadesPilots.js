@@ -22,6 +22,7 @@ const app = Vue.createApp ({
             premi: null,
             dades: [],
             errors: [],
+            mostrarErrors: false,
         }
     },
 
@@ -53,6 +54,12 @@ const app = Vue.createApp ({
                 valid = false;
             }
 
+            //Si hi han errors aleshores mostrem el div d'errors
+            if (this.errors.length > 0)
+            {
+                this.mostrarErrors = true;
+            }
+
             //guardar la aposta si tots els camps son valids
             if(valid){
                 let item = {
@@ -69,6 +76,10 @@ const app = Vue.createApp ({
                 //aposta no valida
             }
             
+        },
+        amagarErrors ()
+        {
+            this.mostrarErrors = false;
         },
         generarAposta ()
         {

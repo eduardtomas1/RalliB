@@ -8,26 +8,28 @@
 		<!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js" defer></script> -->
 		<script src="https://unpkg.com/vue@3/dist/vue.global.js" defer></script>
 		<script type="text/javascript" src="/src/data/dadesPilots.js" defer></script>
+		<link rel="stylesheet" href="./src/style/styles.css">
+		<script type="text/javascript" src="/src/data/moviment.js" defer></script>
 	</head>
 	<body>
 	<div id="app">
-		<div v-if="errors.length" class="errors">
+		<!-- Per la classe especifica de vue he consultat https://vuejs.org/guide/essentials/class-and-style -->
+		<div v-if="errors.length" class="errors" :class="{ 'mostrar-errors': mostrarErrors }">
 			<p>
 			<b>Formulari no valid</b>
 			<ul>
 				<li v-for="error in errors">{{ error }}</li>
 			</ul>
 			</p>
+			<button @click="amagarErrors">D'acord</button> <!-- Botó per tancar la finestra d'error-->
 		</div>
 		<div class="form">
 			<form v-on:submit.prevent="validarCamps" method="post">
 			<label for="email">Email:</label>
 			<input type="email" v-model="email" name="email">
-			<br/><br/>
 			
 			<label for="password">Password:</label>
 			<input type="password" v-model="passwd" name="password">
-			<br/><br/>
 	
 			<label for="pilot">Pilot:</label>
 			<select v-model="pilot_selected" v-on:change="generarAposta">
@@ -35,7 +37,6 @@
 					{{ pilot.nom }}
 				</option>
 			</select>
-			<br/><br/>
 	
 			<label for="aposta">Aposta:</label>
 			<select v-model="aposta_selected" v-on:change="generarAposta">
@@ -43,21 +44,21 @@
 					{{ aposta.nom }}
 				</option>
 			</select>
-			<br/><br/>
 	
-			<label for="cuantitatAposta">Cuantitat Aposta:</label>
-			<input type="number" v-model="qt_apostada" v-on:keyup="calcularAposta" name="cuantitatAposta"> €
-			<br/>
+			<label for="cuantitatAposta">Cuantitat Aposta (€):</label>
+			<input type="number" v-model="qt_apostada" v-on:keyup="calcularAposta" name="cuantitatAposta"> 
 			
 			<p>Multiplicador: {{ multi }}</p> 
 			<p>Premi: {{ premi }}</p>
 
-			<input type="submit" value="Aposta"> <input type="button" v-on:click="resetFormulari" name="reset" value="Reset">
+			<input class="boto" type="submit" value="Aposta"> <input class="boto" type="button" v-on:click="resetFormulari" name="reset" value="Reset">
 			</form>
 		</div>
 		<div>
 			<span class="result" id="result" name="result"></span>
 		</div>
+
+		<img id="choco" src="./src/img/car.png">
 	</div>
 	</body>
 </html>
