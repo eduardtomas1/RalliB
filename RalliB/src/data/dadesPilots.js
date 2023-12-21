@@ -129,7 +129,7 @@ const app = Vue.createApp ({
                 let multi = this.randomFloat(a.valor[0],a.valor[1]);
         
                 let obj = {
-                    "pilot": p.id, "aposta":a.id, "multi": multi, 
+                    "pilot": p.id, "aposta":a.id, "multi": multi,
                 }
 
                 //recollim el objecte amb els multiplicadors generats
@@ -200,8 +200,15 @@ const app = Vue.createApp ({
         mostrarAposta()
         {
             let text = "";
+            //TODO passar valor del pilot per fer el rand
+            let guanyar = Math.random(); 
 
             text = "<p>Mail: "+this.email+"</p><p>Pilot: "+this.pilots[this.pilot_selected].nom+"</p><p>Aposta: "+this.aposta[this.aposta_selected].nom+"</p><p> Import: "+ this.qt_apostada+ "</p><p> Premi: "+this.premi+"</p>";
+            if (guanyar <= '0.5') {
+                text += "<p>Aposta guanyada :)</p>";
+            } else {
+                text += "<p>No has guanyat :(</p>";
+            }
 
             this.result = text;
             console.log(this.result);
